@@ -8,3 +8,5 @@ license = { text = "MIT" }
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+# starlette 1.x wants httpx2 for its TestClient; httpx still works fine
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient`"]

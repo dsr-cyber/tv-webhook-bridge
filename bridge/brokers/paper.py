@@ -36,7 +36,7 @@ class PaperBroker:
                  tz: str = "America/New_York"):
         self._prices = prices
         self._slip = slippage
-        self._on_fill = on_fill
+        self.on_fill = on_fill
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         self._tz = ZoneInfo(tz)
         self._lock = threading.RLock()
@@ -167,8 +167,8 @@ class PaperBroker:
         fill = Fill(order.id, order.client_order_id, order.symbol, order.side,
                     order.qty, price, self._clock())
         self.fills.append(fill)
-        if self._on_fill:
-            self._on_fill(fill)
+        if self.on_fill:
+            self.on_fill(fill)
         return self._arm_bracket(order)
 
     def _arm_bracket(self, parent: Order) -> set[str]:
