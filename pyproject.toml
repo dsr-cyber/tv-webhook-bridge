@@ -1,0 +1,10 @@
+[project]
+name = "tv-webhook-bridge"
+version = "0.1.0"
+description = "TradingView alert webhook to broker order bridge, with a risk layer and a small live dashboard"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

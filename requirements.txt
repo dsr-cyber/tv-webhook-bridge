@@ -1,0 +1,6 @@
+fastapi==0.142.2
+uvicorn==0.54.0
+httpx==0.28.1
+pydantic==2.13.5
+# zoneinfo needs this on Windows and on slim Docker images
+tzdata==2026.5
