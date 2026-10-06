@@ -67,3 +67,11 @@ def test_settings_allow_list_parsing():
 def test_settings_trading_days():
     env = {"WEBHOOK_SECRET": "s" * 20, "DASHBOARD_TOKEN": "t" * 20, "TRADING_DAYS": "Mon, Wed,friday"}
     assert Settings.from_env(env).trading_days == frozenset({0, 2, 4})
+
+
+def test_blank_env_values_mean_default():
+    env = {"WEBHOOK_SECRET": "s" * 20, "DASHBOARD_TOKEN": "t" * 20, "BROKER": "", "TRADING_DAYS": "",
+           "MAX_OPEN_POSITIONS": " ", "ALPACA_BASE_URL": ""}
+    s = Settings.from_env(env)
+    assert (s.broker, s.max_open_positions, len(s.trading_days)) == ("paper", 5, 5)
+    assert s.alpaca_base_url == "https://paper-api.alpaca.markets"

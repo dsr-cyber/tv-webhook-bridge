@@ -1,0 +1,23 @@
+[Unit]
+Description=TradingView webhook bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=bridge
+Group=bridge
+WorkingDirectory=/opt/tv-webhook-bridge
+EnvironmentFile=/etc/tv-webhook-bridge.env
+ExecStart=/opt/tv-webhook-bridge/.venv/bin/python -m bridge
+Restart=on-failure
+RestartSec=5
+
+# /var/lib/tv-webhook-bridge, owned by the service user. Point DB_PATH there.
+StateDirectory=tv-webhook-bridge
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
