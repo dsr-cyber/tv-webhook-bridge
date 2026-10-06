@@ -23,6 +23,16 @@ def _hhmm(value: str) -> time:
     return time(int(h), int(m))
 
 
+DAYS = ("mon", "tue", "wed", "thu", "fri", "sat", "sun")
+
+
+def _days(value: str) -> frozenset[int]:
+    picked = {DAYS.index(d.strip().lower()[:3]) for d in value.split(",") if d.strip()}
+    if not picked:
+        raise ValueError("TRADING_DAYS is empty")
+    return frozenset(picked)
+
+
 def _bool(value: str | None, default: bool = False) -> bool:
     if value is None or value == "":
         return default
@@ -44,6 +54,7 @@ class Settings:
     allow_short: bool = False
     trading_start: time = time(9, 35)
     trading_end: time = time(15, 50)
+    trading_days: frozenset[int] = frozenset(range(5))  # Monday=0
     timezone: str = "America/New_York"
     allowed_symbols: frozenset[str] = field(default_factory=frozenset)
 
@@ -87,6 +98,7 @@ class Settings:
             allow_short=_bool(env.get("ALLOW_SHORT")),
             trading_start=_hhmm(env.get("TRADING_START", "09:35")),
             trading_end=_hhmm(env.get("TRADING_END", "15:50")),
+            trading_days=_days(env.get("TRADING_DAYS", "mon,tue,wed,thu,fri")),
             timezone=env.get("TRADING_TZ", "America/New_York"),
             allowed_symbols=frozenset(s.strip().upper() for s in symbols.split(",") if s.strip()),
             alpaca_key_id=key_id,

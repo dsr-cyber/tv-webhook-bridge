@@ -100,7 +100,8 @@ function setKill(on) {
   const btn = $("kill");
   btn.disabled = false;
   btn.classList.toggle("on", on);
-  btn.textContent = on ? "Kill switch ON: entries blocked" : "Kill switch off";
+  btn.textContent = on ? "Kill switch ON" : "Kill switch off";
+  $("kill-banner").hidden = !on;
 }
 
 function setConn(state) {

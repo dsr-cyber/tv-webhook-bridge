@@ -22,6 +22,7 @@ class Limits:
     allow_short: bool = False
     trading_start: time = time(9, 35)
     trading_end: time = time(15, 50)
+    trading_days: frozenset[int] = frozenset(range(5))
     timezone: str = "America/New_York"
     allowed_symbols: frozenset[str] = frozenset()
 
@@ -35,6 +36,7 @@ class Limits:
             allow_short=s.allow_short,
             trading_start=s.trading_start,
             trading_end=s.trading_end,
+            trading_days=s.trading_days,
             timezone=s.timezone,
             allowed_symbols=s.allowed_symbols,
         )
@@ -78,8 +80,8 @@ def check_symbol(alert: Alert, ctx: Context, limits: Limits) -> str | None:
 
 def check_window(alert: Alert, ctx: Context, limits: Limits) -> str | None:
     local = ctx.now.astimezone(ZoneInfo(limits.timezone))
-    if local.weekday() >= 5:
-        return f"weekend ({local:%a %H:%M} {limits.timezone})"
+    if local.weekday() not in limits.trading_days:
+        return f"not a trading day ({local:%a} {limits.timezone})"
     t = local.time()
     if not (limits.trading_start <= t < limits.trading_end):
         return (

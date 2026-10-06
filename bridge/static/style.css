@@ -35,7 +35,7 @@ header {
 }
 
 .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.name { font-weight: 600; letter-spacing: .01em; }
+.name { font-weight: 600; letter-spacing: .01em; white-space: nowrap; }
 
 .tag {
   font: 600 11px var(--mono);
@@ -83,6 +83,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 16px 20px 40px; }
   border-radius: 6px;
   color: var(--red);
 }
+.banner.warn { border-color: var(--amber); color: var(--amber); }
 
 .tiles {
   display: grid;

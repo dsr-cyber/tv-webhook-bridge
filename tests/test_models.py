@@ -62,3 +62,8 @@ def test_settings_pick_alpaca_only_with_keys():
 def test_settings_allow_list_parsing():
     env = {"WEBHOOK_SECRET": "s" * 20, "DASHBOARD_TOKEN": "t" * 20, "ALLOWED_SYMBOLS": " spy, qqq ,,"}
     assert Settings.from_env(env).allowed_symbols == frozenset({"SPY", "QQQ"})
+
+
+def test_settings_trading_days():
+    env = {"WEBHOOK_SECRET": "s" * 20, "DASHBOARD_TOKEN": "t" * 20, "TRADING_DAYS": "Mon, Wed,friday"}
+    assert Settings.from_env(env).trading_days == frozenset({0, 2, 4})

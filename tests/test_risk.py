@@ -66,6 +66,12 @@ def test_window_follows_dst():
     assert risk.check_window(alert(), ctx(now=winter), Limits()) is not None
 
 
+def test_trading_days_are_configurable():
+    saturday = datetime(2026, 10, 10, 15, 0, tzinfo=timezone.utc)
+    assert risk.check_window(alert(), ctx(now=saturday), Limits()) == "not a trading day (Sat America/New_York)"
+    assert risk.check_window(alert(), ctx(now=saturday), Limits(trading_days=frozenset(range(7)))) is None
+
+
 def test_custom_window():
     limits = Limits(trading_start=time(0, 0), trading_end=time(23, 59))
     assert risk.check_window(alert(), ctx(now=datetime(2026, 10, 7, 2, 0, tzinfo=timezone.utc)), limits) is None
