@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tv-webhook-bridge</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="name">tv-webhook-bridge</span>
+      <span id="broker" class="tag">-</span>
+      <span id="conn" class="conn" title="stream status">connecting</span>
+    </div>
+    <button id="kill" class="kill" type="button" disabled>Kill switch</button>
+  </header>
+
+  <form id="login" class="login" hidden>
+    <label for="token">Dashboard token</label>
+    <div class="row">
+      <input id="token" type="password" autocomplete="current-password" spellcheck="false">
+      <button type="submit">Connect</button>
+    </div>
+    <p id="login-error" class="error" hidden>That token didn't work.</p>
+  </form>
+
+  <main id="main" hidden>
+    <p id="broker-error" class="banner" hidden></p>
+
+    <section class="tiles">
+      <div class="tile"><span class="label">Realized today</span><span id="pnl-realized" class="num">-</span></div>
+      <div class="tile"><span class="label">Unrealized</span><span id="pnl-unrealized" class="num">-</span></div>
+      <div class="tile"><span class="label">Day total</span><span id="pnl-total" class="num">-</span></div>
+    </section>
+
+    <section class="panel">
+      <h2>Positions</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Symbol</th><th class="r">Qty</th><th class="r">Avg</th><th class="r">Last</th><th class="r">Unrealized</th></tr></thead>
+          <tbody id="positions"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Open orders</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Symbol</th><th>Side</th><th class="r">Qty</th><th>Type</th><th class="r">Price</th><th>Status</th><th>Id</th></tr></thead>
+          <tbody id="orders"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Last 20 decisions</h2>
+      <div class="scroll">
+        <table class="decisions">
+          <thead><tr><th>Time</th><th>Outcome</th><th>Symbol</th><th>Side</th><th class="r">Qty</th><th>Detail</th></tr></thead>
+          <tbody id="decisions"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

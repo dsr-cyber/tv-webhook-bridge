@@ -1,0 +1,173 @@
+:root {
+  color-scheme: dark;
+  --bg: #0e1116;
+  --panel: #151a21;
+  --line: #252c36;
+  --text: #dde3ea;
+  --muted: #8a94a2;
+  --green: #4cc38a;
+  --red: #f2626b;
+  --amber: #e0a94a;
+  --blue: #6aa8f0;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 1;
+}
+
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.name { font-weight: 600; letter-spacing: .01em; }
+
+.tag {
+  font: 600 11px var(--mono);
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+}
+
+.conn { font-size: 12px; color: var(--muted); }
+.conn::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  vertical-align: 1px;
+}
+.conn.live::before { background: var(--green); }
+.conn.down::before { background: var(--red); }
+
+button {
+  font: inherit;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+button:disabled { opacity: .5; cursor: default; }
+
+.kill { flex: none; font-weight: 600; }
+.kill.on { background: var(--red); border-color: var(--red); color: #fff; }
+
+main { max-width: 1100px; margin: 0 auto; padding: 16px 20px 40px; }
+
+.banner {
+  margin: 0 0 14px;
+  padding: 9px 12px;
+  border: 1px solid var(--red);
+  border-radius: 6px;
+  color: var(--red);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tile .label { font-size: 12px; color: var(--muted); }
+.tile .num { font: 600 22px var(--mono); }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.panel h2 {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+.scroll { overflow-x: auto; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 7px 14px; text-align: left; white-space: nowrap; }
+th { font-size: 12px; font-weight: 500; color: var(--muted); }
+td { border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+th.r, td.r { text-align: right; }
+td.mono { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+td.empty { color: var(--muted); text-align: center; padding: 14px; }
+.decisions td:last-child { white-space: normal; min-width: 280px; color: var(--muted); }
+
+.pos { color: var(--green); }
+.neg { color: var(--red); }
+
+.badge {
+  display: inline-block;
+  font: 600 11px var(--mono);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+}
+.badge.accepted { color: var(--green); }
+.badge.refused, .badge.invalid { color: var(--amber); }
+.badge.error, .badge.kill_switch { color: var(--red); }
+.badge.duplicate { color: var(--muted); }
+
+.login {
+  max-width: 360px;
+  margin: 15vh auto 0;
+  padding: 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.login label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 13px; }
+.login .row { display: flex; gap: 8px; }
+.login input {
+  flex: 1 1 0;
+  min-width: 0;
+  font: 14px var(--mono);
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 10px;
+}
+.error { color: var(--red); margin: 10px 0 0; font-size: 13px; }
+
+@media (max-width: 640px) {
+  header { padding: 10px 14px; }
+  main { padding: 12px 14px 32px; }
+  .tiles { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .tile .num { font-size: 18px; }
+  .conn { display: none; }
+}
